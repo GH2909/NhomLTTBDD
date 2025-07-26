@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/HeaderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:accessibilityLiveRegion="none"
+            android:background="#FF9800"
+            android:fitsSystemWindows="true"
+            android:padding="10dp">
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="69dp"
+                android:layout_height="51dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="140dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toStartOf="@+id/imgLogo"
+                android:background="@android:color/transparent"
+                android:color="#fff"
+                android:contentDescription="Menu"
+                android:src="@android:drawable/ic_menu_sort_by_size" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="177dp"
+                android:layout_height="46dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="0dp"
+                android:contentDescription="Logo"
+                android:src="@drawable/logo" />
+
+
+        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <!--    Nav-->
+    <ListView
+        android:id="@+id/menu"
+        android:layout_width="258dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false"
+        android:layout_x="-3dp"
+        android:layout_y="3dp"
+        android:layout_marginTop="30dp"
+        android:background="#FFFFFF"
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
+</androidx.drawerlayout.widget.DrawerLayout>
