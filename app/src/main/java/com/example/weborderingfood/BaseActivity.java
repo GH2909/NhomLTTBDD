@@ -1,8 +1,14 @@
 package com.example.weborderingfood;
 
+import static com.example.weborderingfood.Constants.BASE_URL;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -18,7 +24,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 public class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
-    protected ImageButton btnMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +36,26 @@ public class BaseActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setupMenu();
+        updateMenu();
     }
 
     public void setContentLayout(int layoutResId) {
         FrameLayout frameLayout = findViewById(R.id.contentFrame);
         LayoutInflater.from(this).inflate(layoutResId, frameLayout, true);
     }
-    private void setupMenu(){
-        String[] menuItems = {"Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng nhập"};
+    private void updateMenu(){
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("logged_in", false);
+        String fullname = prefs.getString("fullname", "Chưa đăng nhập");
+        Log.d("DEBUG", "logged_in = " + isLoggedIn);
+        Log.d("DEBUG", "fullname = " + fullname);
+
+        String[] menuItems;
+        if (isLoggedIn) {
+            menuItems = new String[]{fullname + " (Chi tiết)","Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng xuất"};
+        } else {
+            menuItems = new String[]{"Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng nhập"};
+        }
         ImageButton btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         ListView menu = findViewById(R.id.menu);
@@ -48,21 +64,42 @@ public class BaseActivity extends AppCompatActivity {
 
         menu.setOnItemClickListener((adapterView, view, i, l) -> {
             drawerLayout.closeDrawers();
-            switch (i) {
-                case 0:
-                    startActivity(new Intent(BaseActivity.this, MainActivity.class));
-                    break;
-//                case 1:
-//                    startActivity(new Intent(BaseActivity.this, MenuActivity.class));
-//                    break;
-//                case 2:
-//                    startActivity(new Intent(BaseActivity.this, HistoryActivity.class));
-//                    break;
-                case 3:
-                    startActivity(new Intent(BaseActivity.this, LoginActivity.class));
-                    break;
+            if (isLoggedIn) {
+                switch (i) {
+                    case 0: // Thông tin người dùng
+                        startActivity(new Intent(BaseActivity.this, UserInfoActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(BaseActivity.this, MainActivity.class));
+                        break;
+                    case 4: // Đăng xuất
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.clear();
+                        editor.apply();
 
+                        Intent intent = new Intent(BaseActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        break;
+
+                }
+            } else {
+                switch (i) {
+                    case 0:
+                        startActivity(new Intent(BaseActivity.this, MainActivity.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                        break;
+                }
             }
         });
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateMenu();
     }
 }

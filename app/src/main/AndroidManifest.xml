@@ -16,6 +16,9 @@
         android:theme="@style/Theme.WebOrderingFood"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UserInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
