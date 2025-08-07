@@ -24,7 +24,7 @@ public class UserInfoActivity extends BaseActivity {
         TextView txtName = findViewById(R.id.txtFullname);
         TextView txtEmail = findViewById(R.id.txtEmail);
 
-        txtName.setText("Tên người dùng: "+name);
+        txtName.setText("KFJOLIer: "+name);
         txtEmail.setText("Email: "+email);
     }
 }
