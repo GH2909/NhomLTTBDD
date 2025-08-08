@@ -1,17 +1,48 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FAF4EC">
+        android:padding="8dp"
+        android:gravity="center">
 
-        <include layout="@layout/slideshow" />
-        <include layout="@layout/menu_section" />
-        <include layout="@layout/recently_viewed" />
-        <include layout="@layout/introduction" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FAF4EC"
+            android:orientation="vertical">
 
+            <include layout="@layout/slideshow" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="MENU"
+                android:textColor="#ccc"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-15dp"
+                android:nestedScrollingEnabled="false"
+                android:padding="8dp" />
+
+            <include layout="@layout/introduction" />
+
+        </LinearLayout>
+
+        <include layout="@layout/footer" />
     </LinearLayout>
-</ScrollView>
+
+</androidx.core.widget.NestedScrollView>
