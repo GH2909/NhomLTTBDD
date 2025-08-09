@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:padding="16dp"
     android:fitsSystemWindows="true"
     android:background="@color/white">
 
@@ -53,10 +53,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="Nhập họ và tên"
-                android:padding="10dp" />
+                android:padding="15dp" />
 
             <!-- Số điện thoại -->
             <TextView
@@ -72,11 +72,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="Nhập số điện thoại"
                 android:inputType="phone"
-                android:padding="10dp" />
+                android:padding="15dp" />
 
             <!-- Địa chỉ -->
             <TextView
@@ -93,10 +93,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="Nhập địa chỉ"
-                android:padding="10dp" />
+                android:padding="15dp" />
 
             <!-- Phường / Xã -->
             <TextView
@@ -111,7 +111,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"/>
 
             <!-- Khu vực -->
             <TextView
@@ -124,11 +125,11 @@
 
             <Spinner
                 android:id="@+id/spinnerKhuVuc"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"/>
 
             <!-- Ghi chú -->
             <TextView
@@ -144,10 +145,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
                 android:background="@android:drawable/edit_text"
                 android:hint="VD: Giao trước 12h, gọi trước khi đến"
-                android:padding="10dp" />
+                android:padding="15dp" />
 
             <!-- Chi tiết đơn hàng -->
             <TextView
@@ -161,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Matcha Latte Kem Sữa x1\nPhí giao hàng: 15.000đ\nTổng cộng: 47.000đ"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="5dp"
                 android:lineSpacingExtra="15dp"
                 />
@@ -179,7 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="100dp">
+                android:layout_marginBottom="10dp">
 
                 <RadioButton
                     android:id="@+id/radioTienMat"
@@ -199,6 +200,7 @@
     <!-- Nút đặt hàng cố định dưới -->
     <Button
         android:id="@+id/btnDatHang"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="200dp"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"

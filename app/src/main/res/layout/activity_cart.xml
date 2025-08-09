@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CBFFFFFF"
     >
 
     <!-- Header tượng trưng -->
@@ -91,16 +92,14 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.button.MaterialButton
+                    <ImageButton
                         android:id="@+id/btnMinus"
-                        android:layout_width="25dp"
-                        android:layout_height="32dp"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="#FF000000"
-                        android:textSize="5sp"
-                        app:cornerRadius="16dp"
-                        app:strokeColor="@android:color/black"
-                        app:strokeWidth="1.5dp" />
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/btn_circle"
+                        android:src="@drawable/ic_remove"
+                        android:scaleType="centerInside"
+                        />
 
                     <TextView
                         android:id="@+id/tvQuantity"
@@ -112,16 +111,13 @@
                         android:textColor="#333333"
                         android:textSize="16sp" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <ImageButton
                         android:id="@+id/btnPlus"
-                        android:layout_width="25dp"
-                        android:layout_height="32dp"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="#FF000000"
-                        android:textSize="5sp"
-                        app:cornerRadius="16dp"
-                        app:strokeColor="@android:color/black"
-                        app:strokeWidth="1.5dp" />
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/btn_circle"
+                        android:src="@drawable/ic_add"
+                        android:scaleType="centerInside" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -134,13 +130,12 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btnCheckout"
-        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="200dp"
         android:layout_height="56dp"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="#FFA726"
+        android:backgroundTint="@color/orange"
         android:text="Thanh toán"
         android:textStyle="bold"
         android:textColor="@android:color/white"
