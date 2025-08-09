@@ -39,7 +39,7 @@ public class BaseActivity extends AppCompatActivity {
         LayoutInflater.from(this).inflate(layoutResId, frameLayout, true);
     }
     private void setupMenu(){
-        String[] menuItems = {"Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng nhập"};
+        String[] menuItems = {"Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng nhập", "Giỏ hàng của bạn"};
         ImageButton btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         ListView menu = findViewById(R.id.menu);
@@ -60,6 +60,9 @@ public class BaseActivity extends AppCompatActivity {
 //                    break;
                 case 3:
                     startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                    break;
+                case 4:
+                    startActivity(new Intent(BaseActivity.this, CartActivity.class));
                     break;
 
             }
