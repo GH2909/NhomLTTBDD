@@ -3,6 +3,7 @@ package com.example.weborderingfood;
 import static com.example.weborderingfood.Constants.BASE_URL;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -84,9 +87,20 @@ public class LoginActivity extends AppCompatActivity {
                             showToast("Không có phản hồi từ server");
                         } else if (location.contains("loginok") || location.contains("index.php")) {
                             showToast("Đăng nhập thành công");
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+
+                            SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("logged_in", true);
+                            editor.putString("email", email);
+                            editor.apply();
+                            getFullnameFromServer(email, () -> {
+                                // Chuyển sang trang chính SAU khi đã có fullname
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            });
+
                         } else if (location.contains("fail")) {
                             showToast("Sai email hoặc mật khẩu");
                         } else if (location.contains("blocked")) {
@@ -113,4 +127,59 @@ public class LoginActivity extends AppCompatActivity {
     private void showToast(String msg) {
         runOnUiThread(() -> Toast.makeText(this, msg, Toast.LENGTH_LONG).show());
     }
+
+    private void getFullnameFromServer(String email, Runnable onSuccess) {
+        new Thread(() -> {
+            try {
+                URL url = new URL(BASE_URL + "user_info.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String data = "email=" + URLEncoder.encode(email, "UTF-8");
+
+                OutputStream os = conn.getOutputStream();
+                os.write(data.getBytes());
+                os.flush();
+                os.close();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = in.readLine()) != null) {
+                    response.append(line);
+                }
+                in.close();
+
+                Log.d("DEBUG", "Phản hồi từ server: " + response.toString());
+
+                JSONObject json = new JSONObject(response.toString());
+
+                if (json.getString("status").equals("success")) {
+                    JSONObject user = json.getJSONObject("user");
+                    String fullname = user.getString("fullname");
+
+                    Log.d("DEBUG", "Đã lấy fullname: " + fullname);
+
+                    runOnUiThread(() -> {
+                        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("fullname", fullname);
+                        editor.putBoolean("logged_in", true); // đảm bảo set trạng thái login
+                        editor.apply();
+
+                        Log.d("DEBUG", "Đã lưu fullname vào SharedPreferences: " + fullname);
+                        onSuccess.run(); // callback để update giao diện hoặc chuyển màn hình
+                    });
+                } else {
+                    Log.e("DEBUG", "Lỗi lấy fullname: không thành công");
+                }
+
+            } catch (Exception e) {
+                Log.e("DEBUG", "Lỗi khi gọi userInfo.php", e);
+            }
+        }).start();
+    }
+
 }
