@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- Header tượng trưng -->
+
+
+    <!-- Tiêu đề giỏ hàng -->
+    <TextView
+        android:id="@+id/tvCartTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GIỎ HÀNG CỦA BẠN"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFA726"
+        android:gravity="center"
+        android:paddingVertical="8dp"
+        />
+
+    <!-- Danh sách sản phẩm có thể cuộn -->
+
+    <!-- Nút thanh toán cố định ở dưới -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="?android:attr/listDivider"
+            android:dividerPadding="8dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <!-- Ví dụ mặt hàng 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#FFFFFF"
+                android:elevation="2dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hamburger" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="12dp">
+
+                    <TextView
+                        android:id="@+id/tvItemName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tên món"
+                        android:textColor="#333333"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvItemPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="122.000₫"
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Bộ điều chỉnh số lượng dùng MaterialButton -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnMinus"
+                        android:backgroundTint="@android:color/white"
+                        android:layout_width="30dp"
+                        android:layout_height="25dp"
+                        app:iconTint="#000000"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#000000"
+                        app:strokeWidth="1.5dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:padding="7dp" />
+
+                    <TextView
+                        android:id="@+id/tvQuantity"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPlus"
+                        android:backgroundTint="@android:color/white"
+                        android:layout_width="30dp"
+                        android:layout_height="25dp"
+                        app:iconTint="#000000"
+                        app:cornerRadius="18dp"
+                        app:strokeColor="#000000"
+                        app:strokeWidth="1.5dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:padding="7dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <!-- Ví dụ mặt hàng 2 -->
+
+
+
+            <!-- TODO: Lặp lại block trên cho các mặt hàng tiếp theo -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCheckout"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="#FFA726"
+        android:text="Thanh toán"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        app:cornerRadius="50dp" />
+
+</LinearLayout>
