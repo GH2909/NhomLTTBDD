@@ -15,45 +15,52 @@
         android:layout_marginTop="50dp"
         android:layout_marginRight="50dp"
         android:src="@drawable/logo" />
-
-    <TextView
-        android:layout_width="89dp"
-        android:layout_height="41dp"
+    <EditText
+        android:id="@+id/editFullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="30dp"
-        android:text="Email"
-        android:textAllCaps="false"
-        android:textColor="#837D7D"
-        android:textSize="20sp" />
+        android:layout_marginRight="50dp"
+        android:hint="Họ và tên"
+        android:textSize="18sp"/>
+
 
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="89dp"
-        android:layout_height="41dp"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="30dp"
-        android:text="Password"
-        android:textAllCaps="false"
-        android:textColor="#837D7D"
-        android:textSize="20sp" />
+        android:layout_marginRight="50dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/editPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
-        android:textSize="20sp" />
+        android:hint="Mật khẩu"
+        android:inputType="textPassword"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/editConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:hint="Nhập lại mật khẩu"
+        android:inputType="textPassword"
+        android:textSize="18sp"/>
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -62,7 +69,7 @@
         android:backgroundTint="#FF5722"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="Đăng nhập"
+        android:text="Đăng kí"
         android:textAllCaps="true"
         android:textSize="20sp"
         app:cornerRadius="5dp"/>
@@ -73,19 +80,24 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="50dp"
+        android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chưa có tài khoản? "
-            android:textSize="20sp"/>
+            android:text="Đã có tài khoản? "
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textLogup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đăng kí ngay"
+            android:onClick=""
+            android:text="Đăng nhập"
             android:textColor="#FF5722"
             android:textSize="20sp"
             android:textStyle="bold" />
