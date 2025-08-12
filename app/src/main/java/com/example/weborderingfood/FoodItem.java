@@ -3,24 +3,31 @@ package com.example.weborderingfood;
 import com.google.gson.annotations.SerializedName;
 
 public class FoodItem {
+
+    @SerializedName("id") // Đã sửa tên cột để khớp với database của bạn
+    private int id;
+
     @SerializedName("ten_mon")
     private String name;
+
     @SerializedName("mo_ta")
     private String description;
-    @SerializedName("gia")
-    private double price; // Thay đổi kiểu dữ liệu từ int sang double
-    @SerializedName("hinh_anh")
-    private String imageUrl; // Sửa tên biến thành imageUrl để dễ đọc hơn
 
-    // Constructor
-    public FoodItem(String name, String description, double price, String imageUrl) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.imageUrl = imageUrl;
+    @SerializedName("gia")
+    private double price;
+
+    @SerializedName("hinh_anh")
+    private String imageUrl;
+
+    @SerializedName("loai")
+    private String category;
+
+    private int quantity;
+
+    public int getId() {
+        return id;
     }
 
-    // Getters
     public String getName() {
         return name;
     }
@@ -37,20 +44,15 @@ public class FoodItem {
         return imageUrl;
     }
 
-    // Setters
-    public void setName(String name) {
-        this.name = name;
+    public String getCategory() {
+        return category;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
