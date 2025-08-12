@@ -1,105 +1,98 @@
 package com.example.weborderingfood;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
 
-import com.google.android.material.button.MaterialButton;
-
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.activity.EdgeToEdge;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartActivity extends BaseActivity {
-    private MaterialButton btnPlus, btnMinus, btnPlus2, btnMinus2, btnPlus1, btnMinus1, btnCheckout;
-    private TextView tvQuantity, tvQuantity1, tvQuantity2;
-    private int quantity = 1, quantity1 = 1, quantity2 = 1;
+
+    private RecyclerView recyclerViewCart;
+    private CartAdapter cartAdapter;
+    private TextView tvTotalPrice;
+    private Button btnCheckout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentLayout(R.layout.activity_cart);
-        // Ánh xạ view
-        btnPlus     = findViewById(R.id.btnPlus);
-        btnMinus    = findViewById(R.id.btnMinus);
-        tvQuantity  = findViewById(R.id.tvQuantity);
 
-//        btnPlus2    = findViewById(R.id.btnPlus2);
-//        btnMinus2   = findViewById(R.id.btnMinus2);
-//        tvQuantity2 = findViewById(R.id.tvQuantity2);
-//
-//        btnPlus1    = findViewById(R.id.btnPlus1);
-//        btnMinus1   = findViewById(R.id.btnMinus1);
-//        tvQuantity1 = findViewById(R.id.tvQuantity1);
-
+        recyclerViewCart = findViewById(R.id.recyclerViewCart);
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
         btnCheckout = findViewById(R.id.btnCheckout);
 
-        // Gán giá trị ban đầu
-        tvQuantity.setText(String.valueOf(quantity));
-//        tvQuantity2.setText(String.valueOf(quantity2));
-//        tvQuantity1.setText(String.valueOf(quantity1));
+        recyclerViewCart.setLayoutManager(new LinearLayoutManager(this));
 
-        // Xử lý mặt hàng 1
-        btnPlus.setOnClickListener(view -> {
-            quantity++;
-            tvQuantity.setText(String.valueOf(quantity));
-        });
-
-        btnMinus.setOnClickListener(view -> {
-            if (quantity > 1) {
-                quantity--;
-                tvQuantity.setText(String.valueOf(quantity));
-            } else {
-                showToastMin();
+        // Khắc phục lỗi "No adapter attached" bằng cách khởi tạo adapter ngay lập tức
+        cartAdapter = new CartAdapter(CartActivity.this, new ArrayList<>(), new Runnable() {
+            @Override
+            public void run() {
+                updateTotalPrice(cartAdapter.getCartItems());
             }
         });
+        recyclerViewCart.setAdapter(cartAdapter);
 
-        // Mặt hàng 2
-//        btnPlus1.setOnClickListener(view -> {
-//            quantity1++;
-//            tvQuantity1.setText(String.valueOf(quantity1));
-//        });
-//
-//        btnMinus1.setOnClickListener(view -> {
-//            if (quantity1 > 1) {
-//                quantity1--;
-//                tvQuantity1.setText(String.valueOf(quantity1));
-//            } else {
-//                showToastMin();
-//            }
-//        });
-//
-//        // Mặt hàng 3
-//        btnPlus2.setOnClickListener(view -> {
-//            quantity2++;
-//            tvQuantity2.setText(String.valueOf(quantity2));
-//        });
-//
-//        btnMinus2.setOnClickListener(view -> {
-//            if (quantity2 > 1) {
-//                quantity2--;
-//                tvQuantity2.setText(String.valueOf(quantity2));
-//            } else {
-//                showToastMin();
-//            }
-//        });
+        fetchCartItems();
 
-        btnCheckout.setOnClickListener(view -> {
-            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
-            intent.putExtra("total_items", quantity);
-            startActivity(intent);
+        btnCheckout.setOnClickListener(v -> {
+            if (cartAdapter != null && cartAdapter.getItemCount() > 0) {
+                Toast.makeText(this, "Chức năng thanh toán sẽ được thực hiện tại đây!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Giỏ hàng trống, không thể thanh toán", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
-    private void showToastMin() {
-        Toast.makeText(CartActivity.this,
-                "Số lượng tối thiểu là 1",
-                Toast.LENGTH_SHORT).show();
+    private void fetchCartItems() {
+        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        Call<CartApiResponse> call = apiService.getCartItems();
+
+        call.enqueue(new Callback<CartApiResponse>() {
+            @Override
+            public void onResponse(Call<CartApiResponse> call, Response<CartApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
+                    List<FoodItem> cartItems = response.body().getCartItems();
+                    if (cartItems != null) {
+                        cartAdapter.updateData(cartItems);
+                        updateTotalPrice(cartItems);
+                    }
+                } else {
+                    Toast.makeText(CartActivity.this, "Lỗi khi lấy dữ liệu giỏ hàng", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartApiResponse> call, Throwable t) {
+                Toast.makeText(CartActivity.this, "Lỗi kết nối mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateTotalPrice(List<FoodItem> items) {
+        double total = 0;
+        for (FoodItem item : items) {
+            total += item.getPrice() * item.getQuantity();
+        }
+        DecimalFormat formatter = new DecimalFormat("#,### đ");
+        tvTotalPrice.setText(formatter.format(total));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchCartItems();
     }
 }

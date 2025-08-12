@@ -53,9 +53,11 @@ public class BaseActivity extends AppCompatActivity {
 
         String[] menuItems;
         if (isLoggedIn) {
-            menuItems = new String[]{fullname + " (Chi tiết)","Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng xuất"};
+            // Thêm "Giỏ hàng" trước "Đăng xuất"
+            menuItems = new String[]{fullname + " (Chi tiết)","Trang chủ", "Menu", "Lịch sử đơn hàng", "Giỏ hàng", "Đăng xuất"};
         } else {
-            menuItems = new String[]{"Trang chủ", "Menu", "Lịch sử đơn hàng", "Đăng nhập"};
+            // Thêm "Giỏ hàng" trước "Đăng nhập"
+            menuItems = new String[]{"Trang chủ", "Menu", "Lịch sử đơn hàng", "Giỏ hàng", "Đăng nhập"};
         }
         ImageButton btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
@@ -70,13 +72,19 @@ public class BaseActivity extends AppCompatActivity {
                     case 0: // Thông tin người dùng
                         startActivity(new Intent(BaseActivity.this, UserInfoActivity.class));
                         break;
-                    case 1:
+                    case 1: // Trang chủ
                         startActivity(new Intent(BaseActivity.this, MainActivity.class));
                         break;
-                    case 2: // Thêm case 2 cho Menu
+                    case 2: // Menu
                         startActivity(new Intent(BaseActivity.this, MenuActivity.class));
                         break;
-                    case 4: // Đăng xuất
+                    case 3: // Lịch sử đơn hàng
+                        startActivity(new Intent(BaseActivity.this, OrderHistoryActivity.class));
+                        break;
+                    case 4: // Giỏ hàng
+                        startActivity(new Intent(BaseActivity.this, CartActivity.class));
+                        break;
+                    case 5: // Đăng xuất
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.clear();
                         editor.apply();
@@ -86,24 +94,29 @@ public class BaseActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         break;
-
                 }
             } else {
                 switch (i) {
-                    case 0:
+                    case 0: // Trang chủ
                         startActivity(new Intent(BaseActivity.this, MainActivity.class));
                         break;
-                    case 1: // Thêm case 1 cho Menu
+                    case 1: // Menu
                         startActivity(new Intent(BaseActivity.this, MenuActivity.class));
                         break;
-                    case 3:
+                    case 2: // Lịch sử đơn hàng
+                        startActivity(new Intent(BaseActivity.this, OrderHistoryActivity.class));
+                        break;
+                    case 3: // Giỏ hàng
+                        startActivity(new Intent(BaseActivity.this, CartActivity.class));
+                        break;
+                    case 4: // Đăng nhập
                         startActivity(new Intent(BaseActivity.this, LoginActivity.class));
                         break;
                 }
             }
         });
-
     }
+
     @Override
     protected void onResume() {
         super.onResume();

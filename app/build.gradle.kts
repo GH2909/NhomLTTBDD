@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -45,6 +44,11 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     // Thư viện Gson để chuyển đổi JSON thành Java Object
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Thư viện OkHttp để quản lý mạng và cookie
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    // Thư viện logging-interceptor để debug
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     // Thư viện Glide để tải và hiển thị hình ảnh từ URL
     implementation("com.github.bumptech.glide:glide:4.16.0")

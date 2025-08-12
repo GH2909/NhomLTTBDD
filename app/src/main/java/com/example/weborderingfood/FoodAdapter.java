@@ -7,20 +7,34 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.DecimalFormat; // Import thư viện DecimalFormat
+import java.text.DecimalFormat;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
 
     private Context context;
     private List<FoodItem> foodList;
+    private CartUpdateListener updateListener; // THÊM BIẾN NÀY ĐỂ LƯU LISTENER
 
+    // SỬA CONSTRUCTOR ĐỂ NHẬN VÀ LƯU LISTENER
+    public FoodAdapter(Context context, List<FoodItem> foodList, CartUpdateListener listener) {
+        this.context = context;
+        this.foodList = foodList;
+        this.updateListener = listener;
+    }
+
+    // CONSTRUCTOR CŨ NẾU CÒN DÙNG THÌ VẪN GIỮ
     public FoodAdapter(Context context, List<FoodItem> foodList) {
         this.context = context;
         this.foodList = foodList;
@@ -37,26 +51,46 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         FoodItem food = foodList.get(position);
 
-        // Sửa tên biến để khớp với ID trong XML
         holder.tvFoodName.setText(food.getName());
         holder.tvFoodDescription.setText(food.getDescription());
 
-        // Định dạng giá tiền để hiển thị chuyên nghiệp hơn
         DecimalFormat formatter = new DecimalFormat("#,### đ");
         String formattedPrice = formatter.format(food.getPrice());
         holder.tvFoodPrice.setText(formattedPrice);
 
-        // Sử dụng Glide để tải ảnh từ URL đầy đủ
         if (food.getImageUrl() != null && !food.getImageUrl().isEmpty()) {
-            // Nối BASE_URL với đường dẫn ảnh
             String fullImageUrl = Constants.BASE_URL + food.getImageUrl();
             Glide.with(context)
                     .load(fullImageUrl)
                     .into(holder.imgFood);
         } else {
-            // Nếu không có ảnh, có thể đặt ảnh placeholder
-            holder.imgFood.setImageResource(R.drawable.garan); // Thay thế bằng một ảnh mặc định
+            holder.imgFood.setImageResource(R.drawable.ic_launcher_background);
         }
+
+        holder.btnAdd.setOnClickListener(v -> {
+            ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+            CartRequest request = new CartRequest("addItem", food.getId(), 1);
+            Call<CartApiResponse> call = apiService.addItemToCart(request);
+
+            call.enqueue(new Callback<CartApiResponse>() {
+                @Override
+                public void onResponse(Call<CartApiResponse> call, Response<CartApiResponse> response) {
+                    if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
+                        Toast.makeText(context, "Đã thêm " + food.getName() + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                        // GỌI LISTENER ĐỂ THÔNG BÁO CẬP NHẬT GIỎ HÀNG
+                        if (updateListener != null) {
+                            updateListener.onCartUpdated();
+                        }
+                    } else {
+                        Toast.makeText(context, "Lỗi khi thêm món!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<CartApiResponse> call, Throwable t) {
+                    Toast.makeText(context, "Lỗi kết nối mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 
     @Override
@@ -66,14 +100,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
         ImageView imgFood;
-        // Sửa tên biến để khớp với các ID trong XML
         TextView tvFoodName, tvFoodDescription, tvFoodPrice;
         Button btnAdd;
 
         public FoodViewHolder(View itemView) {
             super(itemView);
             imgFood = itemView.findViewById(R.id.imgFood);
-            // Ánh xạ các biến với các ID chính xác
             tvFoodName = itemView.findViewById(R.id.tvFoodName);
             tvFoodDescription = itemView.findViewById(R.id.tvFoodDescription);
             tvFoodPrice = itemView.findViewById(R.id.tvFoodPrice);
