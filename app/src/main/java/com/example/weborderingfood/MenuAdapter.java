@@ -13,13 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> {
 
     private Context context;
-    private int[] images;
-    private String[] titles;
+    private int[] imagesMenu;
+    private String[] textMenu;
+    private OnItemClickListener listener;
 
-    public MenuAdapter(Context context, int[] images, String[] titles) {
+    public interface OnItemClickListener {
+        void onItemClick(String category);
+    }
+
+    public MenuAdapter(Context context, int[] imagesMenu, String[] textMenu, OnItemClickListener listener) {
         this.context = context;
-        this.images = images;
-        this.titles = titles;
+        this.imagesMenu = imagesMenu;
+        this.textMenu = textMenu;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,23 +37,34 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
-        holder.imgMenu.setImageResource(images[position]);
-        holder.txtTitle.setText(titles[position]);
+        // Đây là chữ ký phương thức đúng.
+        // Lỗi không phải ở đây.
+        holder.imgMenu.setImageResource(imagesMenu[position]);
+        holder.tvTitle.setText(textMenu[position]);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(textMenu[position]);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return textMenu.length;
     }
 
     public static class MenuViewHolder extends RecyclerView.ViewHolder {
         ImageView imgMenu;
-        TextView txtTitle;
+        TextView tvTitle; // Tên biến đã được đổi để khớp với XML
 
         public MenuViewHolder(@NonNull View itemView) {
             super(itemView);
             imgMenu = itemView.findViewById(R.id.imgMenu);
-            txtTitle = itemView.findViewById(R.id.txtTitle);
+            tvTitle = itemView.findViewById(R.id.txtTitle); // ID đã được đổi để khớp với XML
         }
     }
 }

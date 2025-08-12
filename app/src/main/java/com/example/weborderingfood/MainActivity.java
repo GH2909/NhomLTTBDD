@@ -1,5 +1,6 @@
 package com.example.weborderingfood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,14 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends BaseActivity {
 
-//    Slideshow
+    //    Slideshow
     int[] imagesSlideshow = {R.drawable.home1, R.drawable.home2, R.drawable.home3};
     int currentIndex = 0;
     Handler handler = new Handler();
     Runnable runnable;
-//    Menu
+    //    Menu
     int[] imagesMenu = {R.drawable.monmoi, R.drawable.combo, R.drawable.garan, R.drawable.muc_ran, R.drawable.trangmieng,R.drawable.other};
-    String[] textMenu = {"Món mới", "Combo", "Gà Rán", "Khuyến mãi","Tráng miệng", "Khác"};
+    String[] textMenu = {"Món mới", "Combo", "Gà rán", "Khuyến mãi", "Tráng miệng", "Khác"};
+    String[] categoryNames = {"Món mới", "Combo", "Gà rán", "Khuyến mãi", "Tráng miệng", "Burger - Cơm - Mì ý"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +47,30 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setNestedScrollingEnabled(false);
 
-        MenuAdapter adapter = new MenuAdapter(this, imagesMenu, textMenu);
+        // Tạo adapter với listener
+        MenuAdapter adapter = new MenuAdapter(this, imagesMenu, textMenu, new MenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String category) {
+                // Sửa logic ở đây để xử lý trường hợp "Khác"
+                String categoryToSend = category;
+                if (category.equals("Khác")) {
+                    categoryToSend = "Burger - Cơm - Mì ý";
+                }
+                openMenuActivity(categoryToSend);
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
+    }
+
+    // Phương thức mới để mở MenuActivity
+    private void openMenuActivity(String category) {
+        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+        intent.putExtra("category", category);
+        startActivity(intent);
     }
 }

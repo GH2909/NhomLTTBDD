@@ -73,6 +73,9 @@ public class BaseActivity extends AppCompatActivity {
                     case 1:
                         startActivity(new Intent(BaseActivity.this, MainActivity.class));
                         break;
+                    case 2: // Thêm case 2 cho Menu
+                        startActivity(new Intent(BaseActivity.this, MenuActivity.class));
+                        break;
                     case 4: // Đăng xuất
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.clear();
@@ -89,6 +92,9 @@ public class BaseActivity extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         startActivity(new Intent(BaseActivity.this, MainActivity.class));
+                        break;
+                    case 1: // Thêm case 1 cho Menu
+                        startActivity(new Intent(BaseActivity.this, MenuActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(BaseActivity.this, LoginActivity.class));
