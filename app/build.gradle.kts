@@ -40,6 +40,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Thư viện Retrofit để giao tiếp với API
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Thư viện Gson để chuyển đổi JSON thành Java Object
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Thư viện Glide để tải và hiển thị hình ảnh từ URL
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.android.material:material:1.12.0")

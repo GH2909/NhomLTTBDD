@@ -16,11 +16,23 @@
         android:theme="@style/Theme.WebOrderingFood"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
+        <activity
+            android:name=".OrderHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
