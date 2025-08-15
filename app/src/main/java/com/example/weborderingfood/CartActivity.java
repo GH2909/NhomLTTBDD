@@ -1,5 +1,6 @@
 package com.example.weborderingfood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,7 +50,18 @@ public class CartActivity extends BaseActivity {
 
         btnCheckout.setOnClickListener(v -> {
             if (cartAdapter != null && cartAdapter.getItemCount() > 0) {
-                Toast.makeText(this, "Chức năng thanh toán sẽ được thực hiện tại đây!", Toast.LENGTH_SHORT).show();
+                // Lấy danh sách các món ăn hiện có trong giỏ hàng
+                ArrayList<FoodItem> cartItems = new ArrayList<>(cartAdapter.getCartItems());
+
+                // Tạo một Intent để chuyển đến OrderInformationActivity
+                Intent intent = new Intent(CartActivity.this, OrderInformationActivity.class);
+
+                // Gắn danh sách các món ăn vào Intent
+                // Đảm bảo FoodItem đã implements Serializable
+                intent.putExtra("cartItems", cartItems);
+
+                // Bắt đầu Activity mới
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "Giỏ hàng trống, không thể thanh toán", Toast.LENGTH_SHORT).show();
             }

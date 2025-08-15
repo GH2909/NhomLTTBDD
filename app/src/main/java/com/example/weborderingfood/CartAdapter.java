@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -136,8 +135,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView imgFood;
         TextView tvFoodName, tvFoodPrice, tvQuantity;
-        Button btnPlus, btnMinus;
-        ImageButton btnRemove;
+
+        // ĐÃ SỬA: Đổi kiểu dữ liệu của các nút từ Button thành ImageButton
+        ImageButton btnPlus, btnMinus, btnRemove;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,6 +145,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tvFoodName = itemView.findViewById(R.id.tvFoodName);
             tvFoodPrice = itemView.findViewById(R.id.tvFoodPrice);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
+
+            // findViewById sẽ trả về ImageButton và ép kiểu thành công
             btnPlus = itemView.findViewById(R.id.btnPlus);
             btnMinus = itemView.findViewById(R.id.btnMinus);
             btnRemove = itemView.findViewById(R.id.btnRemove);

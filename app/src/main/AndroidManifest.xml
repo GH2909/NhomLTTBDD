@@ -15,6 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WebOrderingFood"
         android:usesCleartextTraffic="true" >
+
+        <activity
+            android:name=".OrderInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderDetailActivity"
+            android:exported="false" />
+
         <activity
             android:name=".PayActivity"
             android:exported="false" />

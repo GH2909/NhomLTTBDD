@@ -30,6 +30,13 @@ public class LoginActivity extends AppCompatActivity {
     TextView textLogup;
     Button btnLogin;
 
+    // Định nghĩa các hằng số cho SharedPreferences
+    public static final String SHARED_PREFS_NAME = "user";
+    public static final String KEY_LOGGED_IN = "logged_in";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_FULLNAME = "fullname";
+    public static final String KEY_USER_ID = "user_id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +65,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void showToast(String msg) {
+        runOnUiThread(() -> Toast.makeText(this, msg, Toast.LENGTH_LONG).show());
+    }
 
     private void login(String email, String password) {
         new Thread(() -> {
             try {
-                URL url =new URL(BASE_URL + "php/auth/login.php");
+                URL url = new URL(BASE_URL + "php/auth/login.php");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 conn.setRequestMethod("POST");
@@ -87,20 +97,13 @@ public class LoginActivity extends AppCompatActivity {
                             showToast("Không có phản hồi từ server");
                         } else if (location.contains("loginok") || location.contains("index.php")) {
                             showToast("Đăng nhập thành công");
-
-                            SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
-
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putBoolean("logged_in", true);
-                            editor.putString("email", email);
-                            editor.apply();
-                            getFullnameFromServer(email, () -> {
-                                // Chuyển sang trang chính SAU khi đã có fullname
+                            // Sau khi đăng nhập thành công, lấy thêm thông tin người dùng
+                            getFullnameAndUserIdFromServer(email, () -> {
+                                // Chuyển sang trang chính SAU KHI đã có fullname và user_id
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             });
-
                         } else if (location.contains("fail")) {
                             showToast("Sai email hoặc mật khẩu");
                         } else if (location.contains("blocked")) {
@@ -124,13 +127,10 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void showToast(String msg) {
-        runOnUiThread(() -> Toast.makeText(this, msg, Toast.LENGTH_LONG).show());
-    }
-
-    private void getFullnameFromServer(String email, Runnable onSuccess) {
+    private void getFullnameAndUserIdFromServer(String email, Runnable onSuccess) {
         new Thread(() -> {
             try {
+                // Giả định bạn đã sửa user_info.php để trả về user_id
                 URL url = new URL(BASE_URL + "user_info.php");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
@@ -159,25 +159,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (json.getString("status").equals("success")) {
                     JSONObject user = json.getJSONObject("user");
                     String fullname = user.getString("fullname");
+                    int userId = user.getInt("id"); // Lấy userId từ phản hồi JSON (sửa tên trường nếu cần)
 
-                    Log.d("DEBUG", "Đã lấy fullname: " + fullname);
+                    Log.d("DEBUG", "Đã lấy fullname: " + fullname + " và userId: " + userId);
 
                     runOnUiThread(() -> {
-                        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+                        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("fullname", fullname);
-                        editor.putBoolean("logged_in", true); // đảm bảo set trạng thái login
+                        editor.putString(KEY_FULLNAME, fullname);
+                        editor.putInt(KEY_USER_ID, userId); // LƯU USER_ID VÀO SHAREDPREFERENCES
+                        editor.putBoolean(KEY_LOGGED_IN, true);
                         editor.apply();
 
-                        Log.d("DEBUG", "Đã lưu fullname vào SharedPreferences: " + fullname);
-                        onSuccess.run(); // callback để update giao diện hoặc chuyển màn hình
+                        Log.d("DEBUG", "Đã lưu thông tin người dùng vào SharedPreferences");
+                        onSuccess.run();
                     });
                 } else {
-                    Log.e("DEBUG", "Lỗi lấy fullname: không thành công");
+                    Log.e("DEBUG", "Lỗi lấy thông tin người dùng: không thành công");
                 }
-
             } catch (Exception e) {
-                Log.e("DEBUG", "Lỗi khi gọi userInfo.php", e);
+                Log.e("DEBUG", "Lỗi khi gọi user_info.php", e);
             }
         }).start();
     }

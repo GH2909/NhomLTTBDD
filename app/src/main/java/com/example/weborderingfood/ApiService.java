@@ -29,4 +29,11 @@ public interface ApiService {
 
     @POST("cart.php?api=true")
     Call<CartApiResponse> removeItemFromCart(@Body CartRequest request);
+
+    // ====================================================================
+    // THÊM PHƯƠNG THỨC TẠO ĐƠN HÀNG MỚI
+    // ====================================================================
+
+    @POST("php/order/create.php?api=true")
+    Call<OrderResponse> createOrder(@Body OrderRequest orderRequest);
 }

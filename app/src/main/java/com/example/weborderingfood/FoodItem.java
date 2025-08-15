@@ -1,8 +1,12 @@
 package com.example.weborderingfood;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class FoodItem {
+public class FoodItem implements Serializable {
+
+    // Thêm serialVersionUID để đảm bảo tính tương thích
+    private static final long serialVersionUID = 1L;
 
     @SerializedName("id") // Đã sửa tên cột để khớp với database của bạn
     private int id;
