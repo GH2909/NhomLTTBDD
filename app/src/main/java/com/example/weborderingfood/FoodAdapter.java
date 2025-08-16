@@ -25,7 +25,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     private Context context;
     private List<FoodItem> foodList;
-    private CartUpdateListener updateListener; // THÊM BIẾN NÀY ĐỂ LƯU LISTENER
+    private CartUpdateListener updateListener;
 
     // SỬA CONSTRUCTOR ĐỂ NHẬN VÀ LƯU LISTENER
     public FoodAdapter(Context context, List<FoodItem> foodList, CartUpdateListener listener) {
@@ -38,6 +38,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public FoodAdapter(Context context, List<FoodItem> foodList) {
         this.context = context;
         this.foodList = foodList;
+    }
+
+    // THÊM: Phương thức để cập nhật dữ liệu cho Adapter
+    public void updateData(List<FoodItem> newFoodList) {
+        this.foodList.clear();
+        this.foodList.addAll(newFoodList);
+        notifyDataSetChanged();
     }
 
     @NonNull

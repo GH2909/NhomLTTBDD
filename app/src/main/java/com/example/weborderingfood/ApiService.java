@@ -30,10 +30,19 @@ public interface ApiService {
     @POST("cart.php?api=true")
     Call<CartApiResponse> removeItemFromCart(@Body CartRequest request);
 
+    //@GET("php/order/history.php")
+    //Call<List<com.example.weborderingfood.model.OrderHistoryItem>> getOrderHistory();
+
     // ====================================================================
     // THÊM PHƯƠNG THỨC TẠO ĐƠN HÀNG MỚI
     // ====================================================================
 
     @POST("php/order/create.php?api=true")
     Call<OrderResponse> createOrder(@Body OrderRequest orderRequest);
+
+    @GET("php/food/search.php")
+    Call<FoodListResponse> searchFood(@Query("q") String query);
+
+    @GET("php/order/detail.php")
+    Call<OrderDetail> getOrderDetails(@Query("order_id") String orderId);
 }

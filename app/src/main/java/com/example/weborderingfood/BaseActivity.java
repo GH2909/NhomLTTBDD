@@ -78,9 +78,9 @@ public class BaseActivity extends AppCompatActivity {
                     case 2: // Menu
                         startActivity(new Intent(BaseActivity.this, MenuActivity.class));
                         break;
-                    case 3: // Lịch sử đơn hàng
-                        startActivity(new Intent(BaseActivity.this, OrderHistoryActivity.class));
-                        break;
+                    //case 3: // Lịch sử đơn hàng
+                        //startActivity(new Intent(BaseActivity.this, OrderHistoryActivity.class));
+                        //break;
                     case 4: // Giỏ hàng
                         startActivity(new Intent(BaseActivity.this, CartActivity.class));
                         break;
@@ -103,9 +103,9 @@ public class BaseActivity extends AppCompatActivity {
                     case 1: // Menu
                         startActivity(new Intent(BaseActivity.this, MenuActivity.class));
                         break;
-                    case 2: // Lịch sử đơn hàng
-                        startActivity(new Intent(BaseActivity.this, OrderHistoryActivity.class));
-                        break;
+                    //case 2: // Lịch sử đơn hàng
+                        //startActivity(new Intent(BaseActivity.this, OrderHistoryActivity.class));
+                        //break;
                     case 3: // Giỏ hàng
                         startActivity(new Intent(BaseActivity.this, CartActivity.class));
                         break;
