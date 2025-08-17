@@ -1,23 +1,26 @@
 package com.example.weborderingfood;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.Serializable;
 
 /**
- * Lớp mô hình dữ liệu (Model) cho một món hàng trong đơn.
- * Lớp này cần phải được cài đặt Serializable để có thể truyền qua Intent giữa các Activity.
+ * Model class for an order item, created from a JSON object.
+ * This class maps the JSON keys from the provided detail.php script.
  */
 public class OrderItem implements Serializable {
     private String productName;
     private int quantity;
     private double price;
 
-    public OrderItem(String productName, int quantity, double price) {
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
+    public OrderItem(JSONObject jsonObject) throws JSONException {
+        // Map data from the JSON Object
+        this.productName = jsonObject.getString("product_name");
+        this.quantity = jsonObject.getInt("quantity");
+        this.price = jsonObject.getDouble("price");
     }
 
-    // Getters cho các thuộc tính
+    // Getters for all fields
     public String getProductName() {
         return productName;
     }

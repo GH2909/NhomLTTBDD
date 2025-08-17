@@ -3,6 +3,7 @@ package com.example.weborderingfood;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -149,9 +150,13 @@ public class OrderInformationActivity extends BaseActivity {
                 if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
                     Toast.makeText(OrderInformationActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
 
+                    // Xóa giỏ hàng trên server trước khi chuyển màn hình
+                    clearCart();
+
                     // Chuyển sang màn hình chi tiết đơn hàng
                     Intent intent = new Intent(OrderInformationActivity.this, OrderDetailActivity.class);
-                    intent.putExtra("orderId", response.body().getOrderId());
+                    // Truyền orderId để màn hình chi tiết có thể lấy dữ liệu
+                    intent.putExtra("order_id", response.body().getOrderId());
                     startActivity(intent);
                     finish(); // Kết thúc màn hình hiện tại
                 } else {
@@ -174,6 +179,31 @@ public class OrderInformationActivity extends BaseActivity {
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
                 Toast.makeText(OrderInformationActivity.this, "Lỗi kết nối mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * Gửi yêu cầu API đến server để xóa giỏ hàng của người dùng.
+     * Cần có một endpoint API tương ứng trên server để xử lý tác vụ này.
+     */
+    private void clearCart() {
+        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        Call<CartApiResponse> call = apiService.clearCart(); // Giả sử có một API clearCart
+
+        call.enqueue(new Callback<CartApiResponse>() {
+            @Override
+            public void onResponse(Call<CartApiResponse> call, Response<CartApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
+                    Log.d("OrderInformation", "Giỏ hàng đã được xóa thành công trên server.");
+                } else {
+                    Log.e("OrderInformation", "Lỗi khi xóa giỏ hàng trên server.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartApiResponse> call, Throwable t) {
+                Log.e("OrderInformation", "Lỗi kết nối mạng khi xóa giỏ hàng: " + t.getMessage());
             }
         });
     }

@@ -22,10 +22,6 @@
         <activity
             android:name=".OrderDetailActivity"
             android:exported="false" />
-
-        <activity
-            android:name=".PayActivity"
-            android:exported="false" />
         <activity
             android:name=".UserInfoActivity"
             android:exported="false" />

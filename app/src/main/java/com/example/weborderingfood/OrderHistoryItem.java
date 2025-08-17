@@ -13,6 +13,18 @@ public class OrderHistoryItem {
     @SerializedName("trang_thai")
     private String status;
 
+    @SerializedName("thoi_gian_dat")
+    private String orderDate;
+
+    // Constructors
+    public OrderHistoryItem(String orderId, String totalAmount, String status, String orderDate) {
+        this.orderId = orderId;
+        this.totalAmount = totalAmount;
+        this.status = status;
+        this.orderDate = orderDate;
+    }
+
+    // Getters and Setters
     public String getOrderId() {
         return orderId;
     }
@@ -35,5 +47,13 @@ public class OrderHistoryItem {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 }

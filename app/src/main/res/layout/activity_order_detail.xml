@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Đây là file layout XML cho màn hình chi tiết đơn hàng (OrderDetailActivity).
+    Nó được thiết kế để hiển thị tất cả các thông tin chi tiết của đơn hàng
+    bao gồm thông tin khách hàng và danh sách các món ăn đã đặt.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F5F5F5"
+    android:padding="16dp"
+    tools:context=".OrderDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Tiêu đề của màn hình -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi tiết đơn hàng"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Container cho thông tin đơn hàng -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Mã đơn hàng -->
+            <TextView
+                android:id="@+id/tv_order_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mã đơn hàng: #..."
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Tên khách hàng -->
+            <TextView
+                android:id="@+id/tv_customer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên khách hàng: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Số điện thoại -->
+            <TextView
+                android:id="@+id/tv_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Địa chỉ -->
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Ghi chú -->
+            <TextView
+                android:id="@+id/tv_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ghi chú: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Phương thức thanh toán -->
+            <TextView
+                android:id="@+id/tv_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thanh toán: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Trạng thái đơn hàng -->
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Ngày tạo đơn hàng -->
+            <TextView
+                android:id="@+id/tv_created_at"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ngày đặt: ..."
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Tổng tiền -->
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tổng tiền: ..."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E53935"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <!-- Tiêu đề cho danh sách các món -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Các món trong đơn"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- RecyclerView để hiển thị danh sách các món ăn -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_order_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/order_item_row"/>
+
+        <Button
+            android:id="@+id/btn_back_to_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:text="Về trang chủ"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            app:cornerRadius="24dp"
+            android:backgroundTint="#FFA500" />
+    </LinearLayout>
+
+</ScrollView>
