@@ -11,7 +11,7 @@ public class ApiClient {
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient;
     // SỬA LẠI: Đảm bảo BASE_URL trỏ đến thư mục gốc của dự án web.
-    private static final String BASE_URL = "http://192.168.1.7/ltweb/BTL/Webcoding-learning/";
+    private static final String BASE_URL = "http://10.0.2.2/ltweb/BTL/Webcoding-learning/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

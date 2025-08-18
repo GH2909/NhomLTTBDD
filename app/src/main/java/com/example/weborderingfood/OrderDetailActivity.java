@@ -30,7 +30,7 @@ import okhttp3.Response;
  * Fetches order details from the server via an API call
  * and populates the UI with the received data.
  */
-public class OrderDetailActivity extends AppCompatActivity {
+public class OrderDetailActivity extends BaseActivity {
 
     private TextView tvOrderId, tvCustomerName, tvPhoneNumber, tvTotal, tvStatus, tvCreatedAt, tvNotes, tvAddress, tvPaymentMethod;
     private RecyclerView rvItems;
@@ -39,7 +39,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_detail);
+        setContentLayout(R.layout.activity_order_detail);
 
         tvOrderId = findViewById(R.id.tv_order_id);
         tvCustomerName = findViewById(R.id.tv_customer_name);

@@ -36,7 +36,7 @@ public class OrderHistoryActivity extends BaseActivity implements OrderHistoryAd
 
         recyclerView = findViewById(R.id.recyclerViewOrderHistory);
         emptyView = findViewById(R.id.emptyView);
-        backIcon = findViewById(R.id.backIcon);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         orderList = new ArrayList<>();
