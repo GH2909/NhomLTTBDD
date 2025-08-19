@@ -1,11 +1,13 @@
 package com.example.weborderingfood;
 
-import android.content.Intent; // Import this for Intent functionality
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,13 +36,15 @@ public class OrderDetailActivity extends BaseActivity {
 
     private TextView tvOrderId, tvCustomerName, tvPhoneNumber, tvTotal, tvStatus, tvCreatedAt, tvNotes, tvAddress, tvPaymentMethod;
     private RecyclerView rvItems;
-    private Button btnBackToMain;
+    private Button btnContinueShopping, btnViewHistory;
+    private LinearLayout buttonLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentLayout(R.layout.activity_order_detail);
 
+        // Ánh xạ các TextView từ XML
         tvOrderId = findViewById(R.id.tv_order_id);
         tvCustomerName = findViewById(R.id.tv_customer_name);
         tvPhoneNumber = findViewById(R.id.tv_phone_number);
@@ -51,22 +55,25 @@ public class OrderDetailActivity extends BaseActivity {
         tvAddress = findViewById(R.id.tv_address);
         tvPaymentMethod = findViewById(R.id.tv_payment_method);
 
-        btnBackToMain = findViewById(R.id.btn_back_to_main);
+        // Ánh xạ các nút chức năng
+        btnContinueShopping = findViewById(R.id.btn_continue_shopping);
+        btnViewHistory = findViewById(R.id.btn_view_history);
 
-        // Set the click event for the button
-        btnBackToMain.setOnClickListener(v -> {
-            // Create a new Intent to navigate to MainActivity
+        // Xử lý sự kiện click cho các nút
+        btnContinueShopping.setOnClickListener(v -> {
             Intent intent = new Intent(OrderDetailActivity.this, MainActivity.class);
-
-            // Start the new Activity
             startActivity(intent);
-
-            // Finish the current activity to remove it from the back stack
             finish();
-
-            Toast.makeText(OrderDetailActivity.this, "Đã quay về trang chủ!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OrderDetailActivity.this, "Tiếp tục mua hàng!", Toast.LENGTH_SHORT).show();
         });
 
+        btnViewHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+            startActivity(intent);
+            Toast.makeText(OrderDetailActivity.this, "Xem lịch sử đơn hàng!", Toast.LENGTH_SHORT).show();
+        });
+
+        // Cấu hình RecyclerView
         rvItems = findViewById(R.id.rv_order_items);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
 
@@ -117,6 +124,7 @@ public class OrderDetailActivity extends BaseActivity {
 
                         runOnUiThread(() -> {
                             if (orderDetail != null) {
+                                // Cập nhật các TextView với dữ liệu từ phản hồi
                                 tvOrderId.setText("Mã đơn hàng: " + orderDetail.getOrderId());
                                 tvCustomerName.setText("Tên khách hàng: " + orderDetail.getTenNguoiDat());
                                 tvPhoneNumber.setText("Số điện thoại: " + orderDetail.getSdt());
@@ -128,12 +136,14 @@ public class OrderDetailActivity extends BaseActivity {
                                 tvPaymentMethod.setText("Thanh toán: " + orderDetail.getPhuongThucThanhToan());
 
                                 List<OrderDetailResponse.OrderItem> items = orderDetail.getItems();
-                                if (items != null) {
-                                    // You will need to create your own adapter class (e.g., OrderItemsAdapter)
-                                    // to handle the display of the list of items.
-                                    // Example:
-                                    // OrderItemsAdapter adapter = new OrderItemsAdapter(items);
-                                    // rvItems.setAdapter(adapter);
+                                if (items != null && !items.isEmpty()) {
+                                    // Khởi tạo và gán adapter cho RecyclerView
+                                    OrderItemsAdapter adapter = new OrderItemsAdapter(items);
+                                    rvItems.setAdapter(adapter);
+                                } else {
+                                    // Hiển thị thông báo nếu danh sách món ăn rỗng
+                                    Toast.makeText(OrderDetailActivity.this, "Không có món ăn nào trong đơn hàng.", Toast.LENGTH_SHORT).show();
+                                    Log.d("OrderDetailActivity", "Danh sách món ăn trống.");
                                 }
                             } else {
                                 Toast.makeText(OrderDetailActivity.this, "Không tìm thấy thông tin đơn hàng.", Toast.LENGTH_SHORT).show();
@@ -141,7 +151,6 @@ public class OrderDetailActivity extends BaseActivity {
                         });
                     } catch (JsonSyntaxException e) {
                         runOnUiThread(() -> {
-                            // This is where we handle errors when the response is not JSON
                             Toast.makeText(OrderDetailActivity.this, "Không tìm thấy đơn hàng với mã ID này.", Toast.LENGTH_LONG).show();
                             Log.e("OrderDetailActivity", "Lỗi cú pháp JSON: " + e.getMessage());
                             Log.e("OrderDetailActivity", "Phản hồi server không hợp lệ: " + jsonResponse);

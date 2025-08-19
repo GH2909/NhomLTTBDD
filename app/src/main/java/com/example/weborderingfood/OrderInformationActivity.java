@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +31,20 @@ public class OrderInformationActivity extends BaseActivity {
 
     private EditText edtHoTen, edtSoDienThoai, edtDiaChi, edtGhiChu;
     private RadioGroup radioGroupPayment;
-    private TextView tvTotalPrice;
+    private TextView tvTotalPrice, tvShippingFee, tvFinalPrice;
     private Button btnDatHang;
     private RecyclerView recyclerViewOrderItems;
     private OrderSummaryAdapter orderSummaryAdapter;
 
+    // Khai báo các Spinner mới cho Phường/Xã và Khu vực
+    private Spinner spnPhuongXa, spnKhuVucGiao;
+
     // Biến để lưu trữ danh sách món ăn và ID người dùng
     private List<FoodItem> cartItems;
     private int userId;
+
+    // Phí vận chuyển mặc định
+    private static final double SHIPPING_FEE = 15000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +58,18 @@ public class OrderInformationActivity extends BaseActivity {
         edtDiaChi = findViewById(R.id.edtDiaChi);
         edtGhiChu = findViewById(R.id.edtGhiChu);
         radioGroupPayment = findViewById(R.id.radioGroupPayment);
-        tvTotalPrice = findViewById(R.id.tvTotalPrice);
         btnDatHang = findViewById(R.id.btnDatHang);
         recyclerViewOrderItems = findViewById(R.id.recyclerViewOrderItems);
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
+        tvShippingFee = findViewById(R.id.tvShippingFee);
+        tvFinalPrice = findViewById(R.id.tvFinalPrice);
+
+        // Khởi tạo các Spinner mới
+        spnPhuongXa = findViewById(R.id.spnPhuongXa);
+        spnKhuVucGiao = findViewById(R.id.spnKhuVucGiao);
+
+        // Đổ dữ liệu tạm vào các Spinner
+        setupSpinners();
 
         recyclerViewOrderItems.setLayoutManager(new LinearLayoutManager(this));
 
@@ -62,7 +79,7 @@ public class OrderInformationActivity extends BaseActivity {
             cartItems = (List<FoodItem>) intent.getSerializableExtra("cartItems");
         }
 
-        // BƯỚC 2: HIỂN THỊ TÓM TẮT ĐƠN HÀNG
+        // BƯỚC 2: HIỂN THỊ TÓM TẮT ĐƠN HÀNG VÀ TỔNG TIỀN
         if (cartItems != null) {
             orderSummaryAdapter = new OrderSummaryAdapter(this, cartItems);
             recyclerViewOrderItems.setAdapter(orderSummaryAdapter);
@@ -89,13 +106,43 @@ public class OrderInformationActivity extends BaseActivity {
         btnDatHang.setOnClickListener(v -> createOrder());
     }
 
+    /**
+     * Phương thức này thiết lập dữ liệu cho các Spinner.
+     * Tạm thời dùng dữ liệu giả. Bạn nên thay thế bằng API call để lấy dữ liệu thực.
+     */
+    private void setupSpinners() {
+        // Dữ liệu cho Phường/Xã dựa trên danh sách bạn cung cấp
+        String[] wards = {"-- Chọn phường --", "Phường Bình Thạnh", "Phường Tân Sơn Nhất", "Phường Cầu Kiệu", "Phường An Nhơn", "Phường Hạnh Thông", "Phường Sài Gòn", "Phường Minh Phụng", "Phường Tân Sơn Hòa", "Phường Phú Nhuận", "Phường An Hội Đông"};
+        ArrayAdapter<String> wardAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, wards);
+        wardAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPhuongXa.setAdapter(wardAdapter);
+
+        // Dữ liệu giả cho Khu vực giao
+        String[] regions = {"Nội thành", "Ngoại thành"};
+        ArrayAdapter<String> regionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, regions);
+        regionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnKhuVucGiao.setAdapter(regionAdapter);
+    }
+
     private void updateTotalPrice(List<FoodItem> items) {
-        double total = 0;
+        double subtotal = 0;
         for (FoodItem item : items) {
-            total += item.getPrice() * item.getQuantity();
+            subtotal += item.getPrice() * item.getQuantity();
         }
+
+        // Tổng tiền cuối cùng = Tổng tiền hàng + Phí vận chuyển
+        double finalPrice = subtotal + SHIPPING_FEE;
+
         DecimalFormat formatter = new DecimalFormat("#,### đ");
-        tvTotalPrice.setText(formatter.format(total));
+
+        // Hiển thị tổng tiền hàng
+        tvTotalPrice.setText(formatter.format(subtotal));
+
+        // Hiển thị phí vận chuyển
+        tvShippingFee.setText(formatter.format(SHIPPING_FEE));
+
+        // Hiển thị tổng tiền cuối cùng
+        tvFinalPrice.setText(formatter.format(finalPrice));
     }
 
     private void createOrder() {
@@ -104,8 +151,25 @@ public class OrderInformationActivity extends BaseActivity {
         String shippingAddress = edtDiaChi.getText().toString().trim();
         String orderNote = edtGhiChu.getText().toString().trim();
 
+        // Lấy giá trị đã chọn từ Spinner
+        String ward = "";
+        if (spnPhuongXa.getSelectedItem() != null) {
+            ward = spnPhuongXa.getSelectedItem().toString();
+        }
+
+        String region = "";
+        if (spnKhuVucGiao.getSelectedItem() != null) {
+            region = spnKhuVucGiao.getSelectedItem().toString();
+        }
+
         if (customerName.isEmpty() || phoneNumber.isEmpty() || shippingAddress.isEmpty()) {
             Toast.makeText(this, "Vui lòng điền đầy đủ thông tin giao hàng", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Thêm kiểm tra cho Spinner
+        if (ward.equals("-- Chọn phường --") || ward.isEmpty() || region.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn Phường/Xã và Khu vực", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -115,10 +179,12 @@ public class OrderInformationActivity extends BaseActivity {
         }
 
         // BƯỚC 4: TẠO ĐỐI TƯỢNG ORDERREQUEST VÀ GỬI API
-        double totalAmount = 0;
+        double subtotal = 0;
         for (FoodItem item : cartItems) {
-            totalAmount += item.getPrice() * item.getQuantity();
+            subtotal += item.getPrice() * item.getQuantity();
         }
+        // Tổng tiền cuối cùng để gửi lên API
+        double totalAmount = subtotal + SHIPPING_FEE;
 
         String paymentMethod = "Tiền mặt";
         int selectedId = radioGroupPayment.getCheckedRadioButtonId();
@@ -128,18 +194,25 @@ public class OrderInformationActivity extends BaseActivity {
 
         String orderDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        // Tạo OrderRequest với userId
+        // Tạo OrderRequest với userId và các trường mới
         OrderRequest orderRequest = new OrderRequest(
                 userId, // Sử dụng biến userId đã lấy từ SharedPreferences
                 customerName,
                 phoneNumber,
                 shippingAddress,
+                ward, // Thêm phường/xã
+                region, // Thêm khu vực
                 orderNote,
                 cartItems,
                 totalAmount,
                 paymentMethod,
                 orderDate
         );
+        // Log toàn bộ JSON payload để kiểm tra trước khi gửi
+        // Sử dụng Gson để chuyển đối tượng thành chuỗi JSON và in ra log
+        com.google.gson.Gson gson = new com.google.gson.Gson();
+        String jsonPayload = gson.toJson(orderRequest);
+        Log.d("OrderInfoActivity", "JSON Payload gửi đi: " + jsonPayload);
 
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
         Call<OrderResponse> call = apiService.createOrder(orderRequest);
@@ -147,23 +220,38 @@ public class OrderInformationActivity extends BaseActivity {
         call.enqueue(new Callback<OrderResponse>() {
             @Override
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
-                if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
-                    Toast.makeText(OrderInformationActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                // Thêm log để kiểm tra phản hồi từ máy chủ
+                Log.d("OrderInfoActivity", "Mã phản hồi từ server: " + response.code());
+                Log.d("OrderInfoActivity", "Thông điệp phản hồi: " + response.message());
 
-                    // Xóa giỏ hàng trên server trước khi chuyển màn hình
-                    clearCart();
+                if (response.isSuccessful() && response.body() != null) {
+                    // Kiểm tra trạng thái "success"
+                    Log.d("OrderInfoActivity", "Trạng thái phản hồi: " + response.body().getStatus());
 
-                    // Chuyển sang màn hình chi tiết đơn hàng
-                    Intent intent = new Intent(OrderInformationActivity.this, OrderDetailActivity.class);
-                    // Truyền orderId để màn hình chi tiết có thể lấy dữ liệu
-                    intent.putExtra("order_id", response.body().getOrderId());
-                    startActivity(intent);
-                    finish(); // Kết thúc màn hình hiện tại
+                    if ("success".equals(response.body().getStatus())) {
+                        Toast.makeText(OrderInformationActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+
+                        // Xóa giỏ hàng trên server trước khi chuyển màn hình
+                        clearCart();
+
+                        // Chuyển sang màn hình chi tiết đơn hàng
+                        Intent intent = new Intent(OrderInformationActivity.this, OrderDetailActivity.class);
+                        // Truyền orderId để màn hình chi tiết có thể lấy dữ liệu
+                        intent.putExtra("order_id", response.body().getOrderId());
+                        startActivity(intent);
+                        finish(); // Kết thúc màn hình hiện tại
+                    } else {
+                        // Trường hợp phản hồi thành công nhưng trạng thái không phải là "success"
+                        String message = response.body().getMessage();
+                        Toast.makeText(OrderInformationActivity.this, "Lỗi đặt hàng: " + message, Toast.LENGTH_LONG).show();
+                        Log.e("OrderInfoActivity", "Lỗi đặt hàng: " + message);
+                    }
                 } else {
                     String error = "Lỗi khi đặt hàng";
                     if (response.errorBody() != null) {
                         try {
                             error = response.errorBody().string();
+                            Log.e("OrderInfoActivity", "Lỗi server: " + error);
                             // Kiểm tra xem lỗi có phải do thiếu user_id không
                             if (error.contains("L\u1ed7i: Ch\u01b0a \u0111\u0103ng nh\u1eadp!")) {
                                 error = "Lỗi: Vui lòng đăng nhập lại.";
@@ -171,6 +259,8 @@ public class OrderInformationActivity extends BaseActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                    } else {
+                        Log.e("OrderInfoActivity", "Không có body lỗi nào.");
                     }
                     Toast.makeText(OrderInformationActivity.this, error, Toast.LENGTH_LONG).show();
                 }
@@ -178,6 +268,8 @@ public class OrderInformationActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
+                // Log lỗi kết nối mạng
+                Log.e("OrderInfoActivity", "Lỗi kết nối mạng: " + t.getMessage());
                 Toast.makeText(OrderInformationActivity.this, "Lỗi kết nối mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
