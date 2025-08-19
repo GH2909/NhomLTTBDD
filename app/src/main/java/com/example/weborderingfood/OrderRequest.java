@@ -2,10 +2,12 @@ package com.example.weborderingfood;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
+import java.io.Serializable;
 
-public class OrderRequest {
-    @SerializedName("user_id") // THÊM DÒNG NÀY
-    private int userId; // THÊM DÒNG NÀY
+public class OrderRequest implements Serializable {
+
+    @SerializedName("user_id")
+    private int userId;
 
     @SerializedName("customer_name")
     private String customerName;
@@ -15,6 +17,12 @@ public class OrderRequest {
 
     @SerializedName("shipping_address")
     private String shippingAddress;
+
+    @SerializedName("ward")
+    private String ward;
+
+    @SerializedName("region")
+    private String region;
 
     @SerializedName("order_note")
     private String orderNote;
@@ -31,12 +39,13 @@ public class OrderRequest {
     @SerializedName("order_date")
     private String orderDate;
 
-    // CẬP NHẬT CONSTRUCTOR ĐỂ NHẬN userId
-    public OrderRequest(int userId, String customerName, String phoneNumber, String shippingAddress, String orderNote, List<FoodItem> items, double totalAmount, String paymentMethod, String orderDate) {
-        this.userId = userId; // GÁN GIÁ TRỊ userId
+    public OrderRequest(int userId, String customerName, String phoneNumber, String shippingAddress, String ward, String region, String orderNote, List<FoodItem> items, double totalAmount, String paymentMethod, String orderDate) {
+        this.userId = userId;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.shippingAddress = shippingAddress;
+        this.ward = ward;
+        this.region = region;
         this.orderNote = orderNote;
         this.items = items;
         this.totalAmount = totalAmount;
@@ -47,5 +56,45 @@ public class OrderRequest {
     // Các getters (nếu cần)
     public int getUserId() {
         return userId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getOrderNote() {
+        return orderNote;
+    }
+
+    public List<FoodItem> getItems() {
+        return items;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
     }
 }

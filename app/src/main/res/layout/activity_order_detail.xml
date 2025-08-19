@@ -1,160 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Đây là file layout XML cho màn hình chi tiết đơn hàng (OrderDetailActivity).
-    Nó được thiết kế để hiển thị tất cả các thông tin chi tiết của đơn hàng
-    bao gồm thông tin khách hàng và danh sách các món ăn đã đặt.
+    Đây là file layout XML cho màn hình chi tiết đơn hàng.
+    File này tái hiện giao diện từ hình ảnh được cung cấp, với các cải tiến về thiết kế.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F5F5F5"
     android:padding="16dp"
     tools:context=".OrderDetailActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!-- ScrollView để chứa toàn bộ nội dung -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Tiêu đề của màn hình -->
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chi tiết đơn hàng"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Container cho thông tin đơn hàng -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical">
 
-            <!-- Mã đơn hàng -->
+            <!-- Tiêu đề của màn hình -->
             <TextView
-                android:id="@+id/tv_order_id"
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cảm ơn bạn đã đặt hàng"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#FF4B33"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Container cho thông tin đơn hàng -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mã đơn hàng: #..."
-                android:textSize="16sp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Mã đơn hàng và biểu tượng -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/tv_order_id"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Mã đơn hàng: #ODF0061"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#FF9800"/>
+                    </LinearLayout>
+
+                    <!-- Thông tin chi tiết -->
+                    <TextView
+                        android:id="@+id/tv_customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tên khách hàng: Huy"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại: 0977570473"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Địa chỉ: 123tt"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ghi chú: ..."
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_payment_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Thanh toán: Tiền mặt"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Trạng thái: Đang xử lý"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_created_at"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày đặt: 2025-08-19"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#E0E0E0"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"/>
+
+                    <!-- Tổng tiền -->
+                    <TextView
+                        android:id="@+id/tv_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng tiền: 47.000₫"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#E53935"
+                        android:gravity="end"
+                        android:layout_marginTop="8dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Tiêu đề cho danh sách các món -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Các món trong đơn"
+                android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
-            <!-- Tên khách hàng -->
-            <TextView
-                android:id="@+id/tv_customer_name"
+            <!-- Header of the table for items -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tên khách hàng: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                android:orientation="horizontal"
+                android:background="#FF9800"
+                android:padding="12dp">
 
-            <!-- Số điện thoại -->
-            <TextView
-                android:id="@+id/tv_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Số điện thoại: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Món ăn"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
-            <!-- Địa chỉ -->
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Địa chỉ: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Số lượng"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
-            <!-- Ghi chú -->
-            <TextView
-                android:id="@+id/tv_notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ghi chú: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Đơn giá"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-            <!-- Phương thức thanh toán -->
-            <TextView
-                android:id="@+id/tv_payment_method"
+            <!-- RecyclerView để hiển thị danh sách các món ăn -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_order_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thanh toán: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/order_item_row"/>
 
-            <!-- Trạng thái đơn hàng -->
-            <TextView
-                android:id="@+id/tv_status"
+            <!-- Các nút chức năng -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trạng thái: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="24dp"
+                android:gravity="center">
 
-            <!-- Ngày tạo đơn hàng -->
-            <TextView
-                android:id="@+id/tv_created_at"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ngày đặt: ..."
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                <Button
+                    android:id="@+id/btn_continue_shopping"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tiếp tục mua hàng"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#FF9800"
+                    app:cornerRadius="24dp" />
 
-            <!-- Tổng tiền -->
-            <TextView
-                android:id="@+id/tv_total"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tổng tiền: ..."
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#E53935"
-                android:layout_marginTop="8dp"/>
+                <Button
+                    android:id="@+id/btn_view_history"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Xem lịch sử đơn hàng"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="#FF9800"
+                    app:cornerRadius="24dp" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <!-- Tiêu đề cho danh sách các món -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Các món trong đơn"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- RecyclerView để hiển thị danh sách các món ăn -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_order_items"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            tools:listitem="@layout/order_item_row"/>
-
-        <Button
-            android:id="@+id/btn_back_to_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:text="Về trang chủ"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            app:cornerRadius="24dp"
-            android:backgroundTint="#FFA500" />
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
