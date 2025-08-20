@@ -54,7 +54,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCheckout"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="#FFA726"

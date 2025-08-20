@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Họ và tên"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
@@ -59,6 +60,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background"
+                android:fontFamily="sans-serif-medium"
                 android:hint="Nhập họ và tên"
                 android:padding="15dp" />
 
@@ -66,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Số điện thoại"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
@@ -78,6 +81,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="Nhập số điện thoại"
+                android:fontFamily="sans-serif-medium"
                 android:inputType="phone"
                 android:padding="15dp" />
 
@@ -86,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ giao hàng"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
@@ -97,6 +102,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="Nhập địa chỉ"
+                android:fontFamily="sans-serif-medium"
                 android:padding="15dp" />
 
             <!-- Bổ sung hai cột mới ở đây -->
@@ -104,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Phường / Xã"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
@@ -114,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-medium"
                 android:background="@android:drawable/editbox_background"
                 android:padding="15dp"/>
 
@@ -131,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-medium"
                 android:background="@android:drawable/editbox_background"
                 android:padding="15dp"/>
             <!-- Kết thúc phần bổ sung -->
@@ -139,6 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ghi chú cho đơn hàng"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
@@ -149,6 +159,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-medium"
                 android:background="@android:drawable/edit_text"
                 android:gravity="top"
                 android:hint="VD: Giao trước 12h, gọi trước khi đến"
@@ -158,6 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tóm tắt đơn hàng"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -180,6 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng tiền hàng: "
+                    android:fontFamily="sans-serif-medium"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
@@ -203,6 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phí vận chuyển: "
+                    android:fontFamily="sans-serif-medium"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
@@ -225,7 +239,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tổng tiền: "
+                    android:text="Tổng: "
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:backgroundTint="#FFA726"
@@ -245,6 +259,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Phương thức thanh toán"
+                android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
