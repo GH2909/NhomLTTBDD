@@ -64,6 +64,7 @@
         android:paddingBottom="10dp"
         android:text="Đăng nhập"
         android:textAllCaps="true"
+        android:textStyle="bold"
         android:textSize="20sp"
         app:cornerRadius="5dp"/>
 
@@ -78,8 +79,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:text="Chưa có tài khoản? "
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <TextView
@@ -87,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đăng kí ngay"
-            android:textColor="#FF5722"
+            android:textColor="#FFFCFC"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>

@@ -1,10 +1,12 @@
 package com.example.weborderingfood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ public class MenuActivity extends BaseActivity implements CartUpdateListener {
     private FoodAdapter adapter;
     private TextView tvCartItemCount;
     private EditText edtSearch;
+    private ImageButton btnCart;
     private ImageView btnSearch;
     private List<FoodItem> cartItems;
 
@@ -34,13 +37,22 @@ public class MenuActivity extends BaseActivity implements CartUpdateListener {
         setContentLayout(R.layout.activity_menu);
 
         edtSearch = findViewById(R.id.edtSearch);
+        btnCart = findViewById(R.id.btnCart);
         btnSearch = findViewById(R.id.btnSearch);
         tvCartItemCount = findViewById(R.id.tvCartItemCount);
 
         recyclerView = findViewById(R.id.recyclerViewFood);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        btnSearch.setOnClickListener(v -> performSearch());
+        btnSearch.setOnClickListener(v -> {
+            performSearch();
+        });
+
+        btnCart.setOnClickListener(v -> {
+            // Tạo một Intent mới để chuyển đến CartActivity
+            Intent intent = new Intent(MenuActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
 
         edtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {

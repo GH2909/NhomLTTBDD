@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/orange_background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,7 +19,7 @@
             android:id="@+id/edtSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_border_background"
             android:hint="Tìm kiếm món ăn..."
@@ -30,34 +31,40 @@
 
         <ImageView
             android:id="@+id/btnSearch"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_search"
+            android:contentDescription="Nút tìm kiếm"
             app:tint="@android:color/white" />
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="8dp">
 
-            <ImageView
-                android:id="@+id/icon_cart"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+            <ImageButton
+                android:id="@+id/btnCart"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_bag"
+                android:contentDescription="Nút tìm kiếm"
+                app:tint="@android:color/white" />
 
             <TextView
                 android:id="@+id/tvCartItemCount"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
                 android:layout_gravity="top|end"
+                android:layout_marginEnd="2dp"
+
+                android:background="@drawable/cart_count_background"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </FrameLayout>
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

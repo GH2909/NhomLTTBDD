@@ -27,7 +27,7 @@ public class OrderHistoryActivity extends BaseActivity implements OrderHistoryAd
     private OrderHistoryAdapter adapter;
     private List<OrderHistoryItem> orderList;
     private TextView emptyView;
-    private ImageView backIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class OrderHistoryActivity extends BaseActivity implements OrderHistoryAd
 
         fetchOrderHistory();
 
-        backIcon.setOnClickListener(v -> finish());
+
     }
 
     private void fetchOrderHistory() {

@@ -89,10 +89,10 @@
 
         <ImageButton
             android:id="@+id/btnRemove"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/ic_delete"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="8dp"
             android:contentDescription="Xóa san pham" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

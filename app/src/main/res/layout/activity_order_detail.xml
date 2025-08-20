@@ -9,8 +9,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:padding="16dp"
+    android:background="@color/orange_background"
+    android:padding="10dp"
     tools:context=".OrderDetailActivity">
 
     <!-- ScrollView để chứa toàn bộ nội dung -->
@@ -33,19 +33,20 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cảm ơn bạn đã đặt hàng"
-                android:textSize="28sp"
+                android:text="CẢM ƠN BẠN ĐÃ ĐẶT HÀNG"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#FF4B33"
+                android:textColor="@color/orange"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="2dp"/>
 
             <!-- Container cho thông tin đơn hàng -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
+                app:cardElevation="3dp"
                 app:cardBackgroundColor="#FFFFFF"
                 android:layout_marginBottom="16dp">
 
@@ -55,75 +56,185 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- Mã đơn hàng và biểu tượng -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="12dp">
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mã đơn hàng: "
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
 
                         <TextView
                             android:id="@+id/tv_order_id"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Mã đơn hàng: #ODF0061"
-                            android:textSize="18sp"
+                            android:text="#ODF0061"
                             android:textStyle="bold"
+                            android:textSize="18sp"
                             android:textColor="#FF9800"/>
                     </LinearLayout>
 
-                    <!-- Thông tin chi tiết -->
-                    <TextView
-                        android:id="@+id/tv_customer_name"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tên khách hàng: Huy"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView
-                        android:id="@+id/tv_phone_number"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tên khách hàng: "
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_customer_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Huy"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Số điện thoại: 0977570473"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView
-                        android:id="@+id/tv_address"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Số điện thoại: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_phone_number"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="0977570473"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Địa chỉ: 123tt"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView
-                        android:id="@+id/tv_notes"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Địa chỉ: "
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="123tt"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ghi chú: ..."
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView
-                        android:id="@+id/tv_payment_method"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ghi chú: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_notes"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="..."
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Thanh toán: Tiền mặt"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView
-                        android:id="@+id/tv_status"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thanh toán: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_payment_method"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tiền mặt"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Trạng thái: Đang xử lý"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView
-                        android:id="@+id/tv_created_at"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Trạng thái: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_status"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Đang xử lý"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ngày đặt: 2025-08-19"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp"/>
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ngày đặt: "
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tv_created_at"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="2025-08-19"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -132,19 +243,31 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"/>
 
-                    <!-- Tổng tiền -->
-                    <TextView
-                        android:id="@+id/tv_total"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tổng tiền: 47.000₫"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="#E53935"
+                        android:orientation="horizontal"
                         android:gravity="end"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tổng tiền: "
+                            android:textStyle="bold"
+                            android:textSize="22sp"
+                            android:textColor="@color/black"/>
 
+                        <TextView
+                            android:id="@+id/tv_total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="47.000₫"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/orange_primary"/>
+                    </LinearLayout>
                 </LinearLayout>
+
 
             </androidx.cardview.widget.CardView>
 
@@ -164,8 +287,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#FF9800"
-                android:padding="12dp">
+                android:background="@drawable/round_border_header"
+                android:padding="10dp"
+
+                >
 
                 <TextView
                     android:layout_width="0dp"
@@ -199,6 +324,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_order_items"
                 android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/order_item_row"/>
@@ -217,6 +343,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Tiếp tục mua hàng"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
                     android:layout_marginEnd="8dp"
                     android:backgroundTint="#FF9800"
                     app:cornerRadius="24dp" />
@@ -227,6 +355,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Xem lịch sử đơn hàng"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="#FF9800"
                     app:cornerRadius="24dp" />

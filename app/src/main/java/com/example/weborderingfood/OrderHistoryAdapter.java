@@ -36,9 +36,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryViewHolder holder, int position) {
         OrderHistoryItem order = orderList.get(position);
-        holder.tvOrderId.setText("Mã đơn: " + order.getOrderId());
-        holder.tvTotalAmount.setText("Tổng tiền: " + order.getTotalAmount());
-        holder.tvOrderStatus.setText("Trạng thái: " + order.getStatus());
+        holder.tvOrderId.setText( "#" + order.getOrderId());
+        holder.tvOrderDate.setText( order.getOrderDate());
+        holder.tvTotalAmount.setText( order.getTotalAmount() + "đ");
+        holder.tvOrderStatus.setText( order.getStatus());
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -53,13 +54,14 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     public static class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
-        TextView tvOrderId, tvTotalAmount, tvOrderStatus;
+        TextView tvOrderId, tvTotalAmount, tvOrderStatus, tvOrderDate;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
             tvOrderId = itemView.findViewById(R.id.tvOrderId);
             tvTotalAmount = itemView.findViewById(R.id.tvTotalAmount);
             tvOrderStatus = itemView.findViewById(R.id.tvOrderStatus);
+            tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
         }
     }
 }

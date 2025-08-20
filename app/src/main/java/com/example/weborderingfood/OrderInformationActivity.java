@@ -118,7 +118,7 @@ public class OrderInformationActivity extends BaseActivity {
         spnPhuongXa.setAdapter(wardAdapter);
 
         // Dữ liệu giả cho Khu vực giao
-        String[] regions = {"Nội thành", "Ngoại thành"};
+        String[] regions = {"Thành phố Hồ Chí Minh"};
         ArrayAdapter<String> regionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, regions);
         regionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnKhuVucGiao.setAdapter(regionAdapter);

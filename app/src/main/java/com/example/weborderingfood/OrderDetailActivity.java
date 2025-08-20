@@ -125,15 +125,15 @@ public class OrderDetailActivity extends BaseActivity {
                         runOnUiThread(() -> {
                             if (orderDetail != null) {
                                 // Cập nhật các TextView với dữ liệu từ phản hồi
-                                tvOrderId.setText("Mã đơn hàng: " + orderDetail.getOrderId());
-                                tvCustomerName.setText("Tên khách hàng: " + orderDetail.getTenNguoiDat());
-                                tvPhoneNumber.setText("Số điện thoại: " + orderDetail.getSdt());
-                                tvTotal.setText("Tổng tiền: " + orderDetail.getTongTien());
-                                tvStatus.setText("Trạng thái: " + orderDetail.getTrangThai());
-                                tvCreatedAt.setText("Ngày đặt: " + orderDetail.getCreatedAt());
-                                tvNotes.setText("Ghi chú: " + orderDetail.getGhiChu());
-                                tvAddress.setText("Địa chỉ: " + orderDetail.getDiaChi());
-                                tvPaymentMethod.setText("Thanh toán: " + orderDetail.getPhuongThucThanhToan());
+                                tvOrderId.setText( "#" + orderDetail.getOrderId());
+                                tvCustomerName.setText(orderDetail.getTenNguoiDat());
+                                tvPhoneNumber.setText( orderDetail.getSdt());
+                                tvTotal.setText( orderDetail.getTongTien());
+                                tvStatus.setText( orderDetail.getTrangThai());
+                                tvCreatedAt.setText( orderDetail.getCreatedAt());
+                                tvNotes.setText( orderDetail.getGhiChu());
+                                tvAddress.setText( orderDetail.getDiaChi());
+                                tvPaymentMethod.setText(orderDetail.getPhuongThucThanhToan());
 
                                 List<OrderDetailResponse.OrderItem> items = orderDetail.getItems();
                                 if (items != null && !items.isEmpty()) {
