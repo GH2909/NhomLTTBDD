@@ -40,7 +40,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         // Định dạng giá tiền
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         formatter.setMinimumFractionDigits(0);
-        String formattedPrice = formatter.format(item.getPrice()).replace("₫", "đ");
+        String formattedPrice = formatter.format(item.getPrice()).replace(" ₫", " đ");
         holder.tvPrice.setText(formattedPrice);
     }
 

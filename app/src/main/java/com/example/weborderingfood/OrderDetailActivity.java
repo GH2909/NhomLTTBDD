@@ -128,7 +128,7 @@ public class OrderDetailActivity extends BaseActivity {
                                 tvOrderId.setText( "#" + orderDetail.getOrderId());
                                 tvCustomerName.setText(orderDetail.getTenNguoiDat());
                                 tvPhoneNumber.setText( orderDetail.getSdt());
-                                tvTotal.setText( orderDetail.getTongTien());
+                                tvTotal.setText( orderDetail.getTongTien() + "đ");
                                 tvStatus.setText( orderDetail.getTrangThai());
                                 tvCreatedAt.setText( orderDetail.getCreatedAt());
                                 tvNotes.setText( orderDetail.getGhiChu());
