@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="30dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/orange_background">
 
     <TextView
         android:id="@+id/tvIntroTitle"
@@ -22,6 +23,7 @@
         android:padding="12dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:textColor="@color/black"
         android:text="Dành cho những tín đồ yêu thích các món gà ngon, chất lượng và tiện lợi, KFJoli là lựa chọn hàng đầu với khẩu hiệu “Bạn ăn gì có KFJoli lo”."
         android:textAlignment="center" />
 
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
+        android:textColor="@color/black"
         android:text="Với các món gà chế biến đa dạng như gà rán giòn tan, gà sốt cay Hàn Quốc, gà nướng mật ong, cánh gà chiên nước mắm, cùng nhiều món ăn kèm hấp dẫn như khoai tây chiên, salad, nước uống tươi mát... chúng tôi cam kết sẽ đem đến một trải nghiệm tuyệt vời từ đồ ăn đến dịch vụ dành cho khách hàng một cách trọn vẹn nhất."
         android:textAlignment="center" />
 
@@ -36,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
+        android:textColor="@color/black"
         android:text="Hiện tại, cửa hàng hỗ trợ giao hàng nhanh trong khoảng 15 phút đến các quận lân cận như Bình Thạnh, Gò Vấp, Thủ Đức, Quận 1, Quận 2."
         android:textAlignment="center" />
 </LinearLayout>
